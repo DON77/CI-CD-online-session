@@ -3,9 +3,8 @@ pipeline {
   stages {
     stage('build') {
       steps {
-        sh '''
-sh \'\'\'checkout scm
-def customImage = docker.build("${registry}:${env.BUILD_ID}")\'\'\''''
+        sh '''checkout scm
+def customImage = docker.build("${registry}:${env.BUILD_ID}")'''
       }
     }
 
