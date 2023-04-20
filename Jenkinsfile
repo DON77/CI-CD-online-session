@@ -1,5 +1,6 @@
 pipeline {
   agent any
+  stages {
   stage('Check Code Quality') {
       steps {
           script {
@@ -27,7 +28,7 @@ pipeline {
           }
       }
     }
-  stages {
+  
     stage('Build') {
       steps {
         script {
