@@ -13,14 +13,17 @@ pipeline {
 
     stage('deploy') {
       steps {
-        sh '''docker.withRegistry(\'\', \'docker-id\') {
-        docker.image("${registry}:${env.BUILD_ID}").push(\'latest\')
-      }'''
+        script {
+          docker.withRegistry('', 'docker-id-ci') {
+            docker.image("${registry}:${env.BUILD_ID}").push('latest')
+          }
         }
-      }
 
+      }
     }
-    environment {
-      registry = 'armensadoyan/ci-cd'
-    }
+
   }
+  environment {
+    registry = 'armensadoyan/ci-cd'
+  }
+}
