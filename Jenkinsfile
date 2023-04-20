@@ -10,14 +10,17 @@ pipeline {
 
       }
     }
-    stage('unit-test'){
-      steps{
-        script{
-        docker.image("${registry}:${env.BUILD_ID}").push('latest')
-        sh 'python app_test.py'
+
+    stage('unit-test') {
+      steps {
+        script {
+          docker.image("${registry}:${env.BUILD_ID}").inside{c->
+          sh 'python app_test.py'}
         }
+
       }
     }
+
     stage('deploy') {
       steps {
         script {
