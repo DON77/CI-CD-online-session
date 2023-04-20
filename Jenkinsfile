@@ -1,7 +1,7 @@
 pipeline {
   agent any
   stages {
-    stage('build') {
+    stage('Build') {
       steps {
         script {
           checkout scm
@@ -10,39 +10,40 @@ pipeline {
 
       }
     }
-
-    stage('unit-test') {
-      steps {
+    stage('unit-test'){
+      steps{
         script {
-          docker.image("${registry}:${env.BUILD_ID}").inside{c->
+          docker.image("${registry}:${env.BUILD_ID}").inside {c ->
           sh 'python app_test.py'}
+        
         }
-
+      
       }
+    
     }
-    stage('http-test') {
-      steps {
+    stage('http-test'){
+      steps{
         script {
           docker.image("${registry}:${env.BUILD_ID}").withRun('-p 9005:9000') {c ->
           sh "sleep 5; curl -i http://localhost:9005/test_string"}
-        }
 
-      }
         }
-
+      
       }
     
-
-    stage('deploy') {
+    }
+    stage('Publish') {
       steps {
         script {
-          docker.withRegistry('', 'docker-id-ci') {
+          docker.withRegistry('', 'dockerhub-id') {
             docker.image("${registry}:${env.BUILD_ID}").push('latest')
           }
         }
 
       }
     }
+
+  }
 
  
   environment {
