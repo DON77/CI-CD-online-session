@@ -13,7 +13,7 @@ pipeline {
 
     stage('deploy') {
       steps {
-        sh '''docker.withRegistry(\'\', \'dockerhub_id\') {
+        sh '''docker.withRegistry(\'\', \'dockerhub-id\') {
         docker.image("${registry}:${env.BUILD_ID}").push(\'latest\')
       }'''
         }
