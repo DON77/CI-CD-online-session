@@ -31,7 +31,7 @@ pipeline {
         }
 
       }
-    }
+    
 
     stage('deploy') {
       steps {
@@ -44,7 +44,7 @@ pipeline {
       }
     }
 
-  }
+ 
   environment {
     registry = 'armensadoyan/ci-cd'
   }
